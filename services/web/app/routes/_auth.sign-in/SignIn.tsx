@@ -1,5 +1,10 @@
 import { Center } from '@mantine/core';
+import { SignInWithGoogleForm } from '~/components/forms/auth/SignInWithGoogleForm';
 
 export const SignIn = () => {
-  return <Center py='lg'>SignIn</Center>;
+  return (
+    <Center py='lg'>
+      <SignInWithGoogleForm />
+    </Center>
+  );
 };
