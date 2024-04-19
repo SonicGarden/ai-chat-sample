@@ -2,7 +2,9 @@
   "name": "functions",
   "type": "module",
   "scripts": {
-    "lint": "eslint --ext .js,.ts .",
+    "lint": "eslint --ignore-path .gitignore .",
+    "lint:fix": "eslint --ignore-path .gitignore . --fix",
+    "format": "prettier --write .",
     "build": "tsc",
     "build:watch": "tsc --watch",
     "serve": "npm run build && firebase emulators:start --only functions",
