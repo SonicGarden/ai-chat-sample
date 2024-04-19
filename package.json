@@ -5,6 +5,7 @@
   "scripts": {
     "web": "pnpm --dir services/web",
     "functions": "pnpm --dir services/functions",
+    "shared": "pnpm --dir packages/shared",
     "dev": "pnpm web dev",
     "deploy:web": "pnpm web deploy:default",
     "deploy:functions": "pnpm functions deploy:default",
