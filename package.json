@@ -12,5 +12,12 @@
     "deploy:functions": "pnpm functions deploy:default",
     "lint:fix": "pnpm web lint:fix && pnpm functions lint:fix",
     "format": "pnpm web format && pnpm functions format"
+  },
+  "pnpm": {
+    "updateConfig": {
+      "ignoreDependencies": [
+        "eslint"
+      ]
+    }
   }
 }
