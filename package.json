@@ -3,6 +3,8 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "web": "pnpm --dir services/web"
+    "web": "pnpm --dir services/web",
+    "dev": "pnpm web dev",
+    "deploy:web": "pnpm web deploy:default"
   }
 }
