@@ -1,6 +1,3 @@
 {
-  "include": [
-    ".eslintrc.cjs",
-    ".prettierrc.cjs",
-  ]
+  "include": [".eslintrc.cjs", ".prettierrc.cjs"]
 }
