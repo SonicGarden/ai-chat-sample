@@ -1,20 +1,32 @@
 {
   "hosting": {
     "public": "services/web/build/client",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
     "rewrites": [
       {
         "source": "**",
         "destination": "/index.html"
       }
     ],
-    "predeploy": ["rm -rf .firebase", "pnpm build:shared"]
+    "predeploy": [
+      "rm -rf .firebase",
+      "pnpm build:shared"
+    ]
   },
   "functions": [
     {
       "source": "services/functions",
       "codebase": "default",
-      "ignore": ["node_modules", ".git", "firebase-debug.log", "firebase-debug.*.log"],
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log"
+      ],
       "predeploy": [
         "pnpm build:shared",
         "pnpm shared pack --pack-destination ../../services/functions",
@@ -28,5 +40,9 @@
         "pnpm functions add @local/shared"
       ]
     }
-  ]
+  ],
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  }
 }
