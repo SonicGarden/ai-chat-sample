@@ -15,6 +15,8 @@
   },
   "dependencies": {
     "@local/shared": "workspace:^",
+    "@mantine/core": "^7.8.0",
+    "@mantine/hooks": "^7.8.0",
     "@remix-run/node": "^2.8.1",
     "@remix-run/react": "^2.8.1",
     "react": "^18.2.0",
