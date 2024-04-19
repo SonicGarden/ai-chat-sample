@@ -1,5 +1,8 @@
 {
   "name": "ai-chat-sample",
   "type": "module",
-  "private": true
+  "private": true,
+  "scripts": {
+    "web": "pnpm --dir services/web"
+  }
 }
