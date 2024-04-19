@@ -1,4 +1,5 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
+import { LoadingScreen } from '~/components/screens/LoadingScreen';
 import { MantineProvider, ColorSchemeScript } from '~/utils/mantine/provider';
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -27,5 +28,5 @@ export default function App() {
 }
 
 export function HydrateFallback() {
-  return <p>Loading...</p>;
+  return <LoadingScreen />;
 }
