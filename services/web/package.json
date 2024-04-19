@@ -19,8 +19,10 @@
     "@mantine/hooks": "^7.8.0",
     "@remix-run/node": "^2.8.1",
     "@remix-run/react": "^2.8.1",
+    "firebase": "^10.11.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "reactfire": "^4.2.3"
   },
   "devDependencies": {
     "@remix-run/dev": "^2.8.1",
