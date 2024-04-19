@@ -62,18 +62,6 @@ export const Chat = ({ height }: { height: number }) => {
   return (
     <Stack gap={0} justify='space-between'>
       <Box h={scrollAreaHeight} className={classes.messages} ref={scrollableRef}>
-        {[...new Array(20)].map((_, index) => (
-          <ChatMessage
-            key={index}
-            message={{
-              role: index % 2 === 0 ? 'ai' : 'human',
-              contents: [
-                { type: 'text', value: 'Message1' },
-                { type: 'text', value: 'Message2' },
-              ],
-            }}
-          />
-        ))}
         {threadContent?.messages.map((message, index) => <ChatMessage key={index} message={message} />)}
         <div ref={targetRef} />
       </Box>
