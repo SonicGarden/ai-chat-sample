@@ -1,11 +1,12 @@
 import { Box, Stack } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { useElementSize } from '@mantine/hooks';
+import { useElementSize, useScrollIntoView, useTimeout } from '@mantine/hooks';
 import { useSearchParams } from '@remix-run/react';
 import { arrayUnion } from 'firebase/firestore';
 import { useCallback, useMemo } from 'react';
 import { useAuth } from '~/hooks/firebase/useAuth';
 import { useDocumentData } from '~/hooks/firebase/useDocumentData';
+import { useDeepCompareEffect } from '~/hooks/react-use';
 import { createThreadAndContent } from '~/models/thread';
 import { threadContentRef as _threadContentRef, updateThreadContent } from '~/models/threadContent';
 import { ChatForm } from './ChatForm';
@@ -31,6 +32,8 @@ export const Chat = ({ height }: { height: number }) => {
   const { data: threadContent } = useDocumentData(threadContentRef);
   const isNewThread = !threadContent?.uid;
   const form = useForm<FormValues>({ initialValues: { model: 'gemini-pro', text: '' } });
+  const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView<HTMLDivElement, HTMLDivElement>();
+  const { start: startScroll } = useTimeout(() => scrollIntoView(), 100);
   const handleSubmit = useCallback(
     async ({ model, text }: FormValues) => {
       const newMessage: Message = { role: 'human', contents: [{ type: 'text', value: text }] };
@@ -52,9 +55,13 @@ export const Chat = ({ height }: { height: number }) => {
     [isNewThread, form, uid, threadContentRef, setSearchParams],
   );
 
+  useDeepCompareEffect(() => {
+    startScroll();
+  }, [threadContent?.messages, startScroll]);
+
   return (
     <Stack gap={0} justify='space-between'>
-      <Box h={scrollAreaHeight} className={classes.messages}>
+      <Box h={scrollAreaHeight} className={classes.messages} ref={scrollableRef}>
         {[...new Array(20)].map((_, index) => (
           <ChatMessage
             key={index}
@@ -68,6 +75,7 @@ export const Chat = ({ height }: { height: number }) => {
           />
         ))}
         {threadContent?.messages.map((message, index) => <ChatMessage key={index} message={message} />)}
+        <div ref={targetRef} />
       </Box>
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <ChatForm m={FORM_MARGIN} ref={formRef} form={form} />
