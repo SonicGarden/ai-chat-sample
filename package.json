@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "web": "pnpm --dir services/web",
+    "functions": "pnpm --dir services/functions",
     "dev": "pnpm web dev",
     "deploy:web": "pnpm web deploy:default",
     "lint:fix": "pnpm web lint:fix",
