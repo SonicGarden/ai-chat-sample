@@ -1,9 +1,15 @@
 import { ActionIcon, Group, Textarea } from '@mantine/core';
 import { IconSend } from '@tabler/icons-react';
 import { forwardRef } from 'react';
+import type { FormValues } from './Chat';
 import type { GroupProps } from '@mantine/core';
+import type { UseFormReturnType } from '@mantine/form';
 
-export const ChatForm = forwardRef<HTMLDivElement, GroupProps>((props, ref) => {
+type Props = GroupProps & {
+  form: UseFormReturnType<FormValues>;
+};
+
+export const ChatForm = forwardRef<HTMLDivElement, Props>(({ form, ...props }, ref) => {
   return (
     <Group wrap='nowrap' ref={ref} {...props}>
       <Textarea
@@ -13,10 +19,11 @@ export const ChatForm = forwardRef<HTMLDivElement, GroupProps>((props, ref) => {
         size='md'
         minRows={1}
         rightSection={
-          <ActionIcon variant='subtle' color='gray'>
+          <ActionIcon variant='subtle' color='gray' type='submit' disabled={!form.values.text}>
             <IconSend />
           </ActionIcon>
         }
+        {...form.getInputProps('text')}
       />
     </Group>
   );
