@@ -10,8 +10,8 @@
     "dev": "pnpm web dev",
     "deploy:web": "pnpm web deploy:default",
     "deploy:functions": "pnpm functions deploy:default",
-    "lint:fix": "pnpm web lint:fix && pnpm functions lint:fix",
-    "format": "pnpm web format && pnpm functions format"
+    "lint:fix": "pnpm shared lint:fix && pnpm web lint:fix && pnpm functions lint:fix",
+    "format": "pnpm shared format && pnpm web format && pnpm functions format"
   },
   "pnpm": {
     "updateConfig": {
