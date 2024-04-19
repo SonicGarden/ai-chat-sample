@@ -1,7 +1,6 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration, json, useLoaderData } from '@remix-run/react';
 import { FirebaseAppProvider } from 'reactfire';
 import { LoadingScreen } from '~/components/screens/LoadingScreen';
-import { DefaultLayout } from '~/layouts/DefaultLayout';
 import { firebaseConfig } from '~/utils/firebase/config';
 import { MantineProvider, ColorSchemeScript } from '~/utils/mantine/provider';
 import { AuthProvider } from '~/utils/reactfire/auth';
@@ -38,9 +37,7 @@ export default function App() {
   return (
     <FirebaseAppProvider firebaseConfig={config}>
       <AuthProvider>
-        <DefaultLayout>
-          <Outlet />
-        </DefaultLayout>
+        <Outlet />
       </AuthProvider>
     </FirebaseAppProvider>
   );
