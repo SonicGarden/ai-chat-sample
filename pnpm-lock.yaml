@@ -8,6 +8,12 @@ importers:
 
   .: {}
 
+  packages/shared:
+    devDependencies:
+      typescript:
+        specifier: ^5.4.5
+        version: 5.4.5
+
   services/functions:
     dependencies:
       firebase-admin:
