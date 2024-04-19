@@ -34,6 +34,9 @@ importers:
 
   services/functions:
     dependencies:
+      '@local/shared':
+        specifier: workspace:^
+        version: link:../../packages/shared
       firebase-admin:
         specifier: ^11.8.0
         version: 11.11.1
@@ -71,6 +74,9 @@ importers:
 
   services/web:
     dependencies:
+      '@local/shared':
+        specifier: workspace:^
+        version: link:../../packages/shared
       '@remix-run/node':
         specifier: ^2.8.1
         version: 2.8.1(typescript@5.4.5)
