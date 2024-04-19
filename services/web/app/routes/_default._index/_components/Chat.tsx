@@ -1,6 +1,7 @@
-import { ActionIcon, Box, Group, Stack, Textarea } from '@mantine/core';
+import { Box, Stack } from '@mantine/core';
 import { useElementSize } from '@mantine/hooks';
-import { IconSend } from '@tabler/icons-react';
+import { ChatForm } from './ChatForm';
+import { ChatMessage } from './ChatMessage';
 import classes from './_styles/Chat.module.css';
 
 const FORM_MARGIN = 32;
@@ -13,25 +14,19 @@ export const Chat = ({ height }: { height: number }) => {
     <Stack gap={0} justify='space-between'>
       <Box h={scrollAreaHeight} className={classes.messages}>
         {[...new Array(20)].map((_, index) => (
-          <Box key={index} p={16}>
-            Message {index + 1}
-          </Box>
+          <ChatMessage
+            key={index}
+            message={{
+              role: index % 2 === 0 ? 'ai' : 'human',
+              contents: [
+                { type: 'text', value: 'Message1' },
+                { type: 'text', value: 'Message2' },
+              ],
+            }}
+          />
         ))}
       </Box>
-      <Group wrap='nowrap' m={FORM_MARGIN} ref={formRef}>
-        <Textarea
-          placeholder='Type a message...'
-          w='100%'
-          autosize
-          size='md'
-          minRows={1}
-          rightSection={
-            <ActionIcon variant='subtle' color='gray'>
-              <IconSend />
-            </ActionIcon>
-          }
-        />
-      </Group>
+      <ChatForm m={FORM_MARGIN} ref={formRef} />
     </Stack>
   );
 };
