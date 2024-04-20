@@ -4,6 +4,7 @@ import { LoadingScreen } from '~/components/screens/LoadingScreen';
 import { firebaseConfig } from '~/utils/firebase/config';
 import { MantineProvider, ColorSchemeScript } from '~/utils/mantine/provider';
 import { AuthProvider } from '~/utils/reactfire/auth';
+import { FirestoreProvider } from '~/utils/reactfire/firestore';
 import type { FirebaseOptions } from 'firebase/app';
 
 export async function clientLoader() {
@@ -37,7 +38,9 @@ export default function App() {
   return (
     <FirebaseAppProvider firebaseConfig={config}>
       <AuthProvider>
-        <Outlet />
+        <FirestoreProvider>
+          <Outlet />
+        </FirestoreProvider>
       </AuthProvider>
     </FirebaseAppProvider>
   );

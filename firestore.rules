@@ -1,0 +1,31 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    function isOwn(uid) {
+      return isSignedIn() && request.auth.uid == uid;
+    }
+    function isNew() {
+      return resource == null;
+    }
+    function documentPath(paths) {
+      return path(['databases', database, 'documents'].concat(paths).join('/'));
+    }
+
+    match /threads/{threadId} {
+      allow read: if isOwn(resource.data.uid);
+      allow create: if isOwn(request.resource.data.uid) && existsAfter(documentPath(['threadContents', threadId]));
+      allow delete: if isOwn(resource.data.uid) && !existsAfter(documentPath(['threadContents', threadId]));
+    }
+
+    match /threadContents/{threadId} {
+      allow get: if (isSignedIn() && isNew()) || isOwn(resource.data.uid);
+      allow create: if isOwn(request.resource.data.uid) && existsAfter(documentPath(['threads', threadId]));
+      allow update: if isOwn(resource.data.uid);
+      allow delete: if isOwn(resource.data.uid) && !existsAfter(documentPath(['threads', threadId]));
+    }
+  }
+}
