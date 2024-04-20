@@ -13,6 +13,23 @@
           "order": "DESCENDING"
         }
       ]
+    },
+    {
+      "collectionGroup": "threadVectors",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "uid",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "messages",
+          "vectorConfig": {
+            "dimension": 1536,
+            "flat": {}
+          }
+        }
+      ]
     }
   ],
   "fieldOverrides": []
