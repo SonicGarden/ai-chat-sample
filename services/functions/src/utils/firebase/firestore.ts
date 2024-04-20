@@ -1,4 +1,5 @@
 import { FieldValue, getFirestore as _getFirestore } from 'firebase-admin/firestore';
+import type { VectorQuery } from '@google-cloud/firestore';
 import type { WithId } from '@local/shared';
 import type {
   DocumentData,
@@ -6,6 +7,9 @@ import type {
   Firestore,
   Timestamp,
   WithFieldValue,
+  CollectionReference,
+  DocumentReference,
+  Query,
 } from 'firebase-admin/firestore';
 
 let firestore: Firestore;
@@ -35,4 +39,10 @@ const getConverter = <T extends DocumentData>(): FirestoreDataConverter<WithId<T
   },
 });
 
-export { serverTimestamp, getConverter, getFirestore };
+const getDocumentData = async <T>(ref: DocumentReference<T>) =>
+  ref.get().then((doc) => ({ data: { id: doc.id, ...doc.data() } as WithId<T>, exists: doc.exists }));
+
+const getCollectionData = async <T>(query: CollectionReference<T> | Query<T> | VectorQuery<T>) =>
+  query.get().then(({ docs }) => docs.map((doc) => ({ id: doc.id, ...doc.data() }) as WithId<T>));
+
+export { serverTimestamp, getConverter, getFirestore, getDocumentData, getCollectionData };
