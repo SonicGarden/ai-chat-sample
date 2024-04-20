@@ -9,3 +9,5 @@ export const threadVectorRef = ({ id }: { id: string }) => threadVectorsRef().do
 
 export const setThreadVector = async ({ id, data }: { id: string; data: Partial<ThreadVectorData> }) =>
   threadVectorRef({ id }).set({ updatedAt: serverTimestamp(), ...data }, { merge: true });
+
+export const deleteThreadVector = async ({ id }: { id: string }) => threadVectorRef({ id }).delete();
