@@ -16,6 +16,7 @@
   "dependencies": {
     "@local/shared": "workspace:^",
     "@mantine/core": "^7.8.0",
+    "@mantine/form": "^7.8.0",
     "@mantine/hooks": "^7.8.0",
     "@mantine/modals": "^7.8.0",
     "@mantine/notifications": "^7.8.0",
@@ -25,6 +26,8 @@
     "firebase": "^10.11.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-markdown": "^9.0.1",
+    "react-use": "^17.5.0",
     "reactfire": "^4.2.3"
   },
   "devDependencies": {

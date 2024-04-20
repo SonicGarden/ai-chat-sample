@@ -12,7 +12,8 @@
     "deploy:functions": "pnpm functions deploy:default",
     "lint:fix": "pnpm shared lint:fix && pnpm web lint:fix && pnpm functions lint:fix",
     "format": "pnpm shared format && pnpm web format && pnpm functions format",
-    "preinstall": "pnpm build:shared"
+    "preinstall": "pnpm build:shared",
+    "export:indexes": "firebase firestore:indexes --project default > firestore.indexes.json"
   },
   "pnpm": {
     "updateConfig": {
