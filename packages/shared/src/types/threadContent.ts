@@ -8,10 +8,12 @@ export type Message = {
   }[];
 };
 
+export const models = ['gemini-pro', 'gpt-3.5-turbo', 'gpt-4-turbo'] as const;
+
 export type ThreadContentData = {
   createdAt: Timestamp;
   updatedAt: Timestamp;
-  model: 'gemini-pro';
+  model: (typeof models)[number];
   messages: Message[];
   uid: string;
 };
