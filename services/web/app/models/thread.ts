@@ -38,3 +38,10 @@ export const createThreadAndContent = async ({
   );
   await batch.commit();
 };
+
+export const deleteThreadAndContent = async ({ id }: { id: string }) => {
+  const batch = writeBatch(getFirestore());
+  batch.delete(threadRef({ id }));
+  batch.delete(threadContentRef({ id }));
+  await batch.commit();
+};
