@@ -1,7 +1,7 @@
 import OpenAI from 'openai';
 import { updateThreadContent, throttleUpdateThreadContent } from './models/threadContent.js';
 import { env } from './utils/env.js';
-import { onCall, logger, HttpsError } from './utils/firebase/functions.js';
+import { onCall, logger, HttpsError, taskQueues } from './utils/firebase/functions.js';
 import type { Message, ThreadContent } from '@local/shared';
 
 export const openai = onCall<{ threadId: string; model: ThreadContent['model']; messages: Message[] }>(
@@ -34,7 +34,10 @@ export const openai = onCall<{ threadId: string; model: ThreadContent['model']; 
         ...messages,
         { role: 'ai', contents: [{ type: 'text', value: contentCompletion }] },
       ];
-      await updateThreadContent({ id: threadId, data: { messages: finalMessages } });
+      await Promise.all([
+        updateThreadContent({ id: threadId, data: { messages: finalMessages } }),
+        taskQueues.embeddingThreadContent.enqueue({ id: threadId, uid: auth.uid, messages: finalMessages }),
+      ]);
       return true;
     } catch (error) {
       logger.error('Failed to openai.', { error });
