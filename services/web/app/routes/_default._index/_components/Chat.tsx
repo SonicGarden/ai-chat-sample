@@ -86,8 +86,8 @@ export const Chat = ({ height }: { height: number }) => {
         )}
         <div ref={targetRef} />
       </Box>
-      <form onSubmit={form.onSubmit(handleSubmit)}>
-        <ChatForm m={FORM_MARGIN} ref={formRef} form={form} />
+      <form>
+        <ChatForm m={FORM_MARGIN} ref={formRef} form={form} onSend={form.onSubmit(handleSubmit)} />
       </form>
     </Stack>
   );
