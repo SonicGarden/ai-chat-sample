@@ -8,4 +8,5 @@ module.exports = {
     'selector-class-pattern': null,
   },
   allowEmptyInput: true,
+  ignoreFiles: ['node_modules/**/*', 'build/**/*'],
 };
