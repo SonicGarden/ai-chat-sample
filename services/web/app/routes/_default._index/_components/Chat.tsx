@@ -9,6 +9,7 @@ import { useDocumentData } from '~/hooks/firebase/useDocumentData';
 import { useDeepCompareEffect } from '~/hooks/react-use';
 import { createThreadAndContent } from '~/models/thread';
 import { threadContentRef as _threadContentRef, updateThreadContent } from '~/models/threadContent';
+import { geminiPro } from '~/utils/firebase/functions';
 import { ChatForm } from './ChatForm';
 import { ChatMessage } from './ChatMessage';
 import classes from './_styles/Chat.module.css';
@@ -50,9 +51,13 @@ export const Chat = ({ height }: { height: number }) => {
         await updateThreadContent({ id: threadContentRef.id, data: { messages: arrayUnion(newMessage) } });
       }
       form.setValues({ text: '' });
-      // TODO: AIにメッセージを送信
+      await geminiPro({
+        threadId: threadContentRef.id,
+        model,
+        messages: [...(threadContent?.messages ?? []), newMessage],
+      });
     },
-    [isNewThread, form, uid, threadContentRef, setSearchParams],
+    [isNewThread, form, threadContent?.messages, uid, threadContentRef, setSearchParams],
   );
 
   useDeepCompareEffect(() => {
