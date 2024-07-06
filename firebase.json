@@ -1,31 +1,31 @@
 {
   "hosting": {
     "public": "services/web/build/client",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
         "source": "**",
         "destination": "/index.html"
       }
-    ]
+    ],
+    "predeploy": ["rm -rf .firebase", "pnpm build:shared"]
   },
   "functions": [
     {
       "source": "services/functions",
       "codebase": "default",
-      "ignore": [
-        "node_modules",
-        ".git",
-        "firebase-debug.log",
-        "firebase-debug.*.log"
-      ],
+      "ignore": ["node_modules", ".git", "firebase-debug.log", "firebase-debug.*.log"],
       "predeploy": [
-        "npm --prefix \"$RESOURCE_DIR\" run lint",
-        "npm --prefix \"$RESOURCE_DIR\" run build"
+        "pnpm build:shared",
+        "pnpm shared pack --pack-destination ../../services/functions",
+        "pnpm functions lint",
+        "pnpm functions add ./local-shared-1.0.0.tgz",
+        "pnpm functions build"
+      ],
+      "postdeploy": [
+        "rm -rf services/functions/local-shared-1.0.0.tgz",
+        "pnpm functions remove @local/shared",
+        "pnpm functions add @local/shared"
       ]
     }
   ]
