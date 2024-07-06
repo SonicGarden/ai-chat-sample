@@ -1,7 +1,14 @@
-import { Links, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
+import { Links, Meta, Outlet, Scripts, ScrollRestoration, json, useLoaderData } from '@remix-run/react';
+import { FirebaseAppProvider } from 'reactfire';
 import { LoadingScreen } from '~/components/screens/LoadingScreen';
-import { DefaultLayout } from '~/layouts/DefaultLayout';
+import { firebaseConfig } from '~/utils/firebase/config';
 import { MantineProvider, ColorSchemeScript } from '~/utils/mantine/provider';
+import { AuthProvider } from '~/utils/reactfire/auth';
+import type { FirebaseOptions } from 'firebase/app';
+
+export async function clientLoader() {
+  return json(firebaseConfig());
+}
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -25,10 +32,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+  const config = useLoaderData<FirebaseOptions>();
+
   return (
-    <DefaultLayout>
-      <Outlet />
-    </DefaultLayout>
+    <FirebaseAppProvider firebaseConfig={config}>
+      <AuthProvider>
+        <Outlet />
+      </AuthProvider>
+    </FirebaseAppProvider>
   );
 }
 
