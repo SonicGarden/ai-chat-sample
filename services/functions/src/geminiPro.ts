@@ -1,5 +1,5 @@
 import { VertexAI } from '@google-cloud/vertexai';
-import { updateThreadContent } from './models/threadContent.js';
+import { updateThreadContent, throttleUpdateThreadContent } from './models/threadContent.js';
 import { onCall, logger, HttpsError, defaultRegion } from './utils/firebase/functions.js';
 import type { Message, ThreadContent } from '@local/shared';
 
@@ -22,11 +22,19 @@ export const geminiPro = onCall<{ threadId: string; model: ThreadContent['model'
       const streamingResponse = await generativeModel.generateContentStream(request);
       let text = '';
       for await (const response of streamingResponse.stream) {
-        const currentContent = response?.candidates?.[0].content;
+        const currentContent = response.candidates?.[0].content;
         text += currentContent?.parts[0].text ?? '';
         const newMessages: Message[] = [...messages, { role: 'ai', contents: [{ type: 'text', value: text }] }];
-        await updateThreadContent({ id: threadId, data: { messages: newMessages } });
+        await throttleUpdateThreadContent({ id: threadId, data: { messages: newMessages } });
       }
+      throttleUpdateThreadContent.cancel();
+      const aggregatedResponse = await streamingResponse.response;
+      const aggregatedText = aggregatedResponse.candidates?.[0].content.parts[0].text ?? '';
+      const finalMessages: Message[] = [
+        ...messages,
+        { role: 'ai', contents: [{ type: 'text', value: aggregatedText }] },
+      ];
+      await updateThreadContent({ id: threadId, data: { messages: finalMessages } });
       return true;
     } catch (error) {
       logger.error('Failed to geminiPro.', { error });
