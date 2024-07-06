@@ -25,6 +25,12 @@ importers:
       eslint-plugin-import:
         specifier: ^2.29.1
         version: 2.29.1(@typescript-eslint/parser@7.7.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)
+      firebase:
+        specifier: ^10.11.0
+        version: 10.11.0
+      firebase-admin:
+        specifier: ^11.8.0
+        version: 11.11.1
       prettier:
         specifier: ^3.2.5
         version: 3.2.5
