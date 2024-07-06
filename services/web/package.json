@@ -11,7 +11,7 @@
     "format": "prettier --write .",
     "preview": "vite preview",
     "typecheck": "tsc",
-    "deploy:default": "pnpm build && firebase deploy --project default"
+    "deploy:default": "pnpm build && firebase deploy --except functions --project default"
   },
   "dependencies": {
     "@remix-run/node": "^2.8.1",
