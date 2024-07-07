@@ -46,6 +46,9 @@ importers:
       '@local/shared':
         specifier: workspace:^
         version: link:../../packages/shared
+      dedent:
+        specifier: ^1.5.3
+        version: 1.5.3
       firebase-admin:
         specifier: ^12.1.0
         version: 12.1.0
