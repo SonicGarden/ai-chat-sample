@@ -22,7 +22,8 @@
     "@local/shared": "workspace:^",
     "firebase-admin": "^12.1.0",
     "firebase-functions": "^4.3.1",
-    "lodash-es": "^4.17.21"
+    "lodash-es": "^4.17.21",
+    "openai": "^4.38.2"
   },
   "devDependencies": {
     "@types/lodash-es": "^4.17.12",

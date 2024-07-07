@@ -7,3 +7,6 @@ const httpsCallable = <Request, Response>(name: string) =>
 
 type GeminiProRequest = { threadId: string; model: ThreadContent['model']; messages: Message[] };
 export const geminiPro = (request: GeminiProRequest) => httpsCallable<GeminiProRequest, boolean>('geminiPro')(request);
+
+type OpenAIRequest = { threadId: string; model: ThreadContent['model']; messages: Message[] };
+export const openai = (request: OpenAIRequest) => httpsCallable<OpenAIRequest, boolean>('openai')(request);
